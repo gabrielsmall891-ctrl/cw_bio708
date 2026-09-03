@@ -31,8 +31,9 @@ m_num <- cbind(c(1,2,3), c(4,5,6), c(7, 8, 9))
 
 # 5: Create a base R data frame (`data.frame()` function) using `v_x` and `v_abc100`.  
 # Name the columns `"x"` for `v_x` and `"group"` for `v_abc100`, and assign it to `df_sample`.
-
-df_sample <- data.frame(v_x = "x", v_abc100 = "group")
+x <- v_x
+group <- v_abc100
+data.frame(x,group)
 
 # tidyverse ---------------------------------------------------------------
 
@@ -98,14 +99,14 @@ df_mtcars %>%
 # Add it to `df_mtcars` as a new column named `f_cyl` using `mutate()` function.
 # Use ?factor() for the usage of factor() function.
 
-df_mtcars %>% 
-  factor("cyl", labels = "f_cyl")
+df_mtcars <- df_mtcars %>% 
+  mutate(f_cyl = factor(cyl))
   
 # 15: Draw a box plot showing car weight (`wt`) for each number of cylinders (`f_cyl`).
 
 df_mtcars %>% 
   ggplot(aes(x = wt,
-             y = cyl)
+             y = f_cyl)
          )+
   geom_boxplot()
 
@@ -138,5 +139,16 @@ df_mtcars %>%
 df_l <- read_csv("data_src/data_length_assess01.csv")
 df_w <- read_csv("data_src/data_weight_assess01.csv")
 
+df_fish <- left_join(x = df_l,
+                     y = df_w,
+                     by = c("species", "individual"))
+
 # 20: Draw a scatter plot (point plot) of `length` vs. `weight` from `df_fish`,  
 # coloring the points by `species`
+
+df_fish %>% 
+  ggplot(aes(x = length,
+             y = weight,
+             fill = species))+
+  geom_scatterplot()
+ 
