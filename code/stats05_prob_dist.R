@@ -56,17 +56,16 @@ df_prob <- tibble(p, bin = bin[-length(bin)] + 0.5) %>%
 df_h0 %>% 
   ggplot(aes(x = height))+
   geom_histogram(
-    bin = 1,
+    binwidth = 1,
     center = 0.5
   ) + 
-  geom_point(
-    data = df_prob,
-    aes(x = bin,
-        y = freq),
-    (color = "salmon")+
-      geom_line(data = df_prob,
-                aes(y = freq,
-                    x = bin),
-                color = "salmon")
-  )
+  geom_point(data = df_prob,
+             aes(y = freq,
+                 x = bin),
+             color = "salmon") +
+  geom_line(data = df_prob,
+            aes(y = freq,
+                x = bin),
+            color = "salmon")
 
+##Had to leave class at this point
